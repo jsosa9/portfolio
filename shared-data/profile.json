@@ -1,0 +1,26 @@
+{
+  "name": "Jose Sosa",
+  "tagline": "CS student at Rutgers, building AI products and full stack web apps.",
+  "about": "I'm a Computer Science student at Rutgers University. I've interned at ADP, the State of New Jersey, and HuggleGroup, working across React/Next.js frontends, accessibility, CI/CD, and generative AI. Outside of internships I build my own projects, most recently an AI coaching app called Stackd.",
+  "location": "NJ / NYC",
+  "links": {
+    "email": "jjose.sosa9@gmail.com",
+    "phone": "917-631-6464",
+    "linkedin": "https://linkedin.com/in/josesosa1",
+    "github": "https://github.com/jsosa9",
+    "site": "https://josesosa.dev"
+  },
+  "skills": [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Python",
+    "FastAPI",
+    "Node.js",
+    "PostgreSQL",
+    "Supabase",
+    "Tailwind CSS",
+    "Cypress",
+    "Git"
+  ]
+}

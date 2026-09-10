@@ -1,0 +1,14 @@
+[
+  {
+    "name": "HackPrinceton",
+    "period": "April 17 — 19, 2026 · Princeton University",
+    "description": "Built Shadow, a social platform for tutorials on Meta smart glasses. Creators upload a walkthrough once, and the app guides anyone through it hands free. It captures frames from the glasses every fraction of a second, figures out what step you're on, and narrates the next instruction in real time.",
+    "images": [
+      { "src": "IMG_2042", "alt": "HackPrinceton Spring 2026 opening ceremony", "rotate": -6 },
+      { "src": "IMG_2050", "alt": "Tree on Princeton campus", "rotate": 8 },
+      { "src": "IMG_2051", "alt": "Princeton campus courtyard with purple flowers", "rotate": -4 },
+      { "src": "IMG_2052", "alt": "Stone urn and flowers on Princeton campus", "rotate": 6 },
+      { "src": "78983c0d-4a2c-40f2-b9a8-247014d41617", "alt": "HackPrinceton team group photo", "rotate": -3 }
+    ]
+  }
+]

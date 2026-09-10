@@ -1,0 +1,44 @@
+[
+  {
+    "company": "ADP",
+    "role": "Application Developer Intern",
+    "period": "June 2026 — Aug 2026",
+    "description": "Built a fully autonomous multi agent pipeline converting Figma designs into production ready, accessible React components. Migrated 300+ E2E tests from Selenium to Cypress, unblocking a serialized CI/CD pipeline for parallel builds. Reduced bundle size by 2.9MB by eliminating Ramda.js across 400+ files.",
+    "images": [
+      { "src": "IMG_2476", "alt": "ADP HQ garden pergola with flowers", "rotate": -8 },
+      { "src": "IMG_2479", "alt": "ADP HQ koi pond with lily pads", "rotate": 6 },
+      { "src": "IMG_2481", "alt": "ADP HQ koi pond, close up with koi fish", "rotate": -3 },
+      { "src": "IMG_2500", "alt": "Bear statue sculpture at ADP HQ", "rotate": 9 },
+      { "src": "IMG_24842", "alt": "ADP interns posing together", "rotate": -6 },
+      { "src": "IMG_25182", "alt": "ADP intern cohort at Corporate Headquarters", "rotate": 4 },
+      { "src": "IMG_25192", "alt": "ADP intern cohort outside in the garden", "rotate": -7 },
+      { "src": "IMG_25202", "alt": "ADP Summer 2026 Internship Project Fair group photo", "rotate": 5 }
+    ]
+  },
+  {
+    "company": "State of New Jersey Government (OOI)",
+    "role": "Generative AI Intern",
+    "period": "Sept 2025 — Dec 2025",
+    "description": "Expanded NJ's official AI Assistant, grounding it in a 50+ page Medicaid Doula knowledge base for document referenced answers. Built accessible Next.js forms mapping to government PDF applications. Achieved WCAG 2.1 Level AA compliance for public facing applications.",
+    "images": [
+      { "src": "IMG_1514", "alt": "NJ State House rotunda dome, view up", "rotate": 10 },
+      { "src": "IMG_1516", "alt": "NJ State House rotunda dome, close up", "rotate": -6 },
+      { "src": "IMG_1517", "alt": "NJ State House octagonal ceiling with state seal", "rotate": 5 },
+      { "src": "IMG_1518", "alt": "\"The Glory of New Jersey\" display case", "rotate": -8 },
+      { "src": "IMG_1524", "alt": "NJ Senate chamber", "rotate": -4 },
+      { "src": "IMG_1528", "alt": "NJ State House gold dome exterior", "rotate": 9 },
+      { "src": "IMG_2588", "alt": "Team photo at the office", "rotate": -5 },
+      { "src": "IMG_1530", "alt": "NJ Office of Innovation clip", "rotate": 3 }
+    ]
+  },
+  {
+    "company": "HuggleGroup",
+    "role": "Web Development Intern",
+    "period": "Oct 2023 — Aug 2025",
+    "description": "Led front end development of a critical website overhaul, achieving WCAG 2.1 compliance. Boosted site wide performance 22% (Lighthouse) via Core Web Vitals optimization. Launched a redesigned ecommerce platform and cut malicious bot traffic 95% with reCAPTCHA and Cloudflare.",
+    "images": [
+      { "src": "IMG_0887", "alt": "HuggleGroup desk setup", "rotate": -5 },
+      { "src": "IMG_0880", "alt": "HuggleGroup office dog", "rotate": 9 }
+    ]
+  }
+]
