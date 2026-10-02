@@ -23,7 +23,7 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
       <div class="header-right">
         <nav class="nav">
           <RouterLink to="/" class="nav-link">Home</RouterLink>
-          <RouterLink to="/blog" class="nav-link">Blog</RouterLink>
+          <RouterLink to="/notes" class="nav-link">Notes</RouterLink>
         </nav>
         <ThemeToggle />
       </div>

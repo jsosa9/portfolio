@@ -29,14 +29,24 @@ export async function withDailyCache<T>(
         // JSON) — just fall through and fetch fresh.
     }
 
-    const data = await fetcher();
-
     try {
-        const entry: CacheEntry<T> = { data, fetchedAt: Date.now() };
-        localStorage.setItem(key, JSON.stringify(entry));
-    } catch {
-        // storage full/blocked — non-fatal, we just won't cache this time.
+        const data = await fetcher();
+        try {
+            const entry: CacheEntry<T> = { data, fetchedAt: Date.now() };
+            localStorage.setItem(key, JSON.stringify(entry));
+        } catch {
+            // storage full/blocked — non-fatal, we just won't cache this time.
+        }
+        return data;
+    } catch (err) {
+        // Live fetch failed — serve whatever we last cached, even if stale,
+        // rather than surfacing an error to a returning visitor.
+        try {
+            const raw = localStorage.getItem(key);
+            if (raw) return (JSON.parse(raw) as CacheEntry<T>).data;
+        } catch {
+            // fall through to rethrow
+        }
+        throw err;
     }
-
-    return data;
 }

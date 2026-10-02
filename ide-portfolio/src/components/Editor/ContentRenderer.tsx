@@ -843,7 +843,7 @@ export const ContentRenderer = ({ type, data, title, onOpenFile, content, editor
                     <div className="flex-1 overflow-y-auto custom-scrollbar" onScroll={onScroll}>
                         {/* Immersive Detail Header */}
                         <div className="relative h-[40vh] min-h-[300px] w-full overflow-hidden">
-                            <img src={data.image} alt={data.title} className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-panel)] to-[var(--bg-main)]" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)] via-[var(--bg-main)]/60 to-transparent" />
                             <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
                                 <div className="max-w-5xl mx-auto">
@@ -868,6 +868,12 @@ export const ContentRenderer = ({ type, data, title, onOpenFile, content, editor
                                                 <Github size={18} /> Source Code
                                             </a>
                                         )}
+                                        {data.notes?.map((note: any) => (
+                                            <a key={note.url} href={note.url} target="_blank" rel="noopener noreferrer"
+                                                className="px-8 py-3 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-sm hover:bg-white/20 transition-all flex items-center gap-2">
+                                                <FileText size={18} /> {note.title}
+                                            </a>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -975,12 +981,8 @@ export const ContentRenderer = ({ type, data, title, onOpenFile, content, editor
                     {/* EXTENSION HEADER */}
                     <div className="px-4 md:px-12 max-w-5xl mx-auto w-full py-8">
                         <div className="flex flex-col md:flex-row gap-6 mb-6">
-                            <div className="w-32 h-32 bg-[var(--bg-activity)] border border-[var(--border)] shrink-0 shadow-sm relative overflow-hidden">
-                                <img
-                                    src={data.image}
-                                    alt={data.title}
-                                    className="w-full h-full object-cover"
-                                />
+                            <div className="w-32 h-32 bg-[var(--bg-activity)] border border-[var(--border)] shrink-0 shadow-sm relative overflow-hidden flex items-center justify-center">
+                                <FileCode size={40} className="text-[var(--text-secondary)] opacity-50" />
                             </div>
                             <div className="flex-1 min-w-0 pt-1">
                                 <h1 className="text-3xl font-sans font-bold text-[var(--text-primary)] mb-2 flex items-center gap-3">
@@ -1011,6 +1013,12 @@ export const ContentRenderer = ({ type, data, title, onOpenFile, content, editor
                                             <Github size={14} /> Repository
                                         </a>
                                     )}
+                                    {data.notes?.map((note: any) => (
+                                        <a key={note.url} href={note.url} target="_blank" rel="noopener noreferrer"
+                                            className="px-4 py-1.5 bg-[var(--bg-activity)] hover:bg-[var(--bg-panel)] border border-[var(--border)] text-[var(--text-primary)] text-sm font-medium rounded-sm transition-all flex items-center gap-2">
+                                            <FileText size={14} /> {note.title}
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -1051,15 +1059,6 @@ export const ContentRenderer = ({ type, data, title, onOpenFile, content, editor
                                             <p className="whitespace-pre-wrap text-[15px] leading-relaxed mt-0 pt-0">
                                                 {data.longDescription?.trim()}
                                             </p>
-                                        </div>
-
-                                        {/* Fixed Size Screenshot */}
-                                        <div className="rounded-sm overflow-hidden border border-[var(--border)] bg-[var(--bg-activity)]/20 shadow-xl max-w-2xl w-full">
-                                            <img
-                                                src={data.image}
-                                                alt={`${data.title} Screenshot`}
-                                                className="w-full h-auto object-cover"
-                                            />
                                         </div>
                                     </div>
                                 )}

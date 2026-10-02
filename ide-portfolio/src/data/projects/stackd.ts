@@ -4,27 +4,32 @@
 // fill in and the detail page picks it up automatically (most of these
 // fields degrade gracefully when empty — see ContentRenderer.tsx).
 import type { Project } from "./types";
+import { publicAsset } from "../../utils/publicAsset";
 
 export const stackd: Project = {
     id: "stackd",
     title: "Stackd",
-    subtitle: "TODO — one-line tagline for the project card/header",
+    subtitle: "SMS accountability coaching powered by AI. No app to download. You just text a number.",
 
     description:
         "AI coaching app: a persona modeled after a public figure checks in daily, classifies messages (check ins, tasks, journal entries), and replies in that person's voice via Gemini.",
-    // longDescription: leave unset and the detail page falls back to
-    // `description` above. Fill in for a fuller multi-paragraph writeup.
-    // longDescription: `TODO`,
+    longDescription: `I built this because I kept noticing the same thing: I'd lose hours scrolling instead of doing what I actually wanted to do, and the thing that snapped me out of it was always something dumb and simple, a text that said "hey, are you having a productive day?" or "hey, stop scrolling." A text hits different than a notification you can just swipe away. So I started building something that would send that text for you.
+
+Then I thought: why should the voice be generic? What if you picked someone whose mindset actually drives you, a public figure with a philosophy you respect, and the coach talked like them? That's stackd. You pick a public figure, the app builds an AI coach around their publicly known philosophy and how they communicate, and that coach checks in on you daily, holds you to your goals, tracks your streaks, and pushes back when you're making excuses, all inside your messages app, nothing to install.
+
+Every inbound text goes through the same pipeline: STOP/HELP get intercepted first, the message gets classified (check-in, task, journal, nutrition, bet, or general), the right handler writes structured data to the database, and a voice generator assembles the coach's persona, conversation history, and a set of rules I call HUMAN_BEHAVIOR_RULES before sending it all to Gemini. HUMAN_BEHAVIOR_RULES gets injected into every user-facing Gemini call in the app. It's what keeps the tone consistent everywhere: no markdown, no corporate language, no "as an AI" filler.
+
+Originally I wanted to actually launch this, not as a serious startup, just something people could use for a small fee to cover the cost of keeping it running. But personas turned out to be a real legal minefield, not just a hypothetical one. A lot of public figures are trademarked or represented in ways that make "an AI coach that talks like X" an actual copyright problem. So for now, you can only try the experience through the website demo, not over real SMS.`,
 
     type: "Full Stack Web App",
     tech: ["Next.js", "FastAPI", "Supabase", "Gemini"],
 
     links: {
-        github: "", // TODO — real repo URL (content.js only had your generic profile link as a placeholder)
-        // live: "", // TODO — optional, omit entirely if there's no deployed demo
+        github: "https://github.com/jsosa9/stackd",
+        live: "https://stackd.chat",
     },
 
-    image: "", // TODO — real screenshot. Simplest: drop a file in public/projects/ and reference it as "/projects/stackd.png"
+    image: publicAsset("projects/stackd.jpeg"),
 
     date: "", // TODO — when you built it
     role: "", // TODO — e.g. "Solo Developer" or your actual role if it was a team project

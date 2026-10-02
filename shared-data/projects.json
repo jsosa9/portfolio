@@ -5,8 +5,22 @@
     "description": "AI coaching app: a persona modeled after a public figure checks in daily, classifies messages (check ins, tasks, journal entries), and replies in that person's voice via Gemini.",
     "tech": ["Next.js", "FastAPI", "Supabase", "Gemini"],
     "links": {
-      "github": "https://github.com/jsosa9"
+      "github": "https://github.com/jsosa9/stackd",
+      "live": "https://stackd.chat"
     },
+    "featured": true
+  },
+  {
+    "id": "llm-from-scratch",
+    "name": "LLM From Scratch",
+    "description": "Building an LLM from scratch, piece by piece. Currently: a character-level tokenizer.",
+    "tech": ["Python"],
+    "links": {
+      "github": "https://github.com/jsosa9/llm-from-scratch"
+    },
+    "notes": [
+      { "title": "Character-Level Tokenizer", "url": "/notes/char-level-tokenizer" }
+    ],
     "featured": true
   }
 ]

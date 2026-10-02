@@ -4,6 +4,13 @@ import { profile, projects, experience, hackathons } from '../data/content.js'
 
 // small helper so entrance transitions stay consistent everywhere
 const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, delay } })
+
+// TODO: swap this for the real production URL once ide-portfolio is deployed
+// (Vercel, custom domain, etc). Falls back to the local dev server so this
+// link is actually testable right now.
+const IDE_VERSION_URL = import.meta.env.DEV
+  ? 'http://localhost:5176/ide-portfolio/'
+  : 'https://TODO-set-real-ide-portfolio-url.vercel.app'
 </script>
 
 <template>
@@ -19,18 +26,24 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
       <a :href="profile.links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
       <a :href="profile.links.github" target="_blank" rel="noopener">GitHub</a>
     </div>
+    <a
+      :href="IDE_VERSION_URL"
+      class="ide-version-btn"
+      v-motion
+      :initial="{ opacity: 0, y: 10 }"
+      :enter="fade(380)"
+    >
+      Try the VS Code version →
+    </a>
   </section>
 
   <section class="section">
     <h2 v-motion :initial="{ opacity: 0, y: 14 }" :visible-once="fade(0)">Projects</h2>
     <div class="projects-grid">
-      <a
+      <div
         v-for="(p, i) in projects"
         :key="p.name"
         class="project-card"
-        :href="p.links.github"
-        target="_blank"
-        rel="noopener"
         v-motion
         :initial="{ opacity: 0, y: 14 }"
         :visible-once="fade(i * 80)"
@@ -40,7 +53,11 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
         <div class="tags">
           <span v-for="t in p.tech" :key="t" class="tag">{{ t }}</span>
         </div>
-      </a>
+        <div class="project-links">
+          <a v-if="p.links.github" :href="p.links.github" target="_blank" rel="noopener">GitHub ↗</a>
+          <RouterLink v-for="note in p.notes || []" :key="note.url" :to="note.url">{{ note.title }} →</RouterLink>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -136,6 +153,28 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
   border-bottom-color: var(--accent);
 }
 
+.ide-version-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.ide-version-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -147,14 +186,11 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
   padding: 16px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  text-decoration: none;
-  color: inherit;
   background: var(--card-bg);
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-2px);
   border-color: var(--accent);
 }
 
@@ -167,6 +203,23 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
   margin: 0 0 10px;
   font-size: 14px;
   color: var(--muted);
+}
+
+.project-links {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.project-links a {
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+}
+
+.project-links a:hover {
+  border-bottom-color: var(--accent);
 }
 
 .tags {

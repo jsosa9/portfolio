@@ -2,13 +2,42 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { THEMES } from '../../data/themes';
 import { profile } from '../../data/profile';
 import { withDailyCache, THREE_DAYS_MS } from '../../utils/cachedFetch';
+import contributionsFallback from '../../data/contributionsFallback.json';
 
-// Goes through our own /api/contributions (see api/contributions.ts), which
-// Vercel's CDN caches for 24h and serves to every visitor — not a per-browser
-// cache. The localStorage layer below is just an extra same-browser
-// accelerator on top of that; the CDN cache is what makes it actually global.
-const CONTRIBUTIONS_ENDPOINT = '/api/contributions';
+// This site is a static GitHub Pages build with no serverless functions
+// available, so we hit the public contributions API directly from the
+// browser. The localStorage layer below (withDailyCache) caches the result
+// per-visitor for a few days to avoid refetching on every visit, and falls
+// back to stale cache if the live fetch fails. contributionsFallback.json
+// (refreshed at build time, see scripts/fetch-contributions.mjs) covers the
+// remaining case — a first-time visitor whose live fetch fails with no
+// cache to fall back to — so the widget always has real data to render.
+const CONTRIBUTIONS_API = 'https://github-contributions-api.jogruber.de/v4';
 const GITHUB_USERNAME = profile.links.github.split('/').filter(Boolean).pop() || '';
+const CONTRIBUTIONS_ENDPOINT = `${CONTRIBUTIONS_API}/${GITHUB_USERNAME}?y=last`;
+const FETCH_TIMEOUT_MS = 8000;
+const RETRY_DELAYS_MS = [300, 900];
+
+async function fetchWithRetry(url: string): Promise<ContributionsResponse> {
+    let lastErr: unknown;
+    for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+        try {
+            const res = await fetch(url, { signal: controller.signal });
+            if (!res.ok) throw new Error(`Contributions request failed: ${res.status}`);
+            return (await res.json()) as ContributionsResponse;
+        } catch (err) {
+            lastErr = err;
+            if (attempt < RETRY_DELAYS_MS.length) {
+                await new Promise((resolve) => setTimeout(resolve, RETRY_DELAYS_MS[attempt]));
+            }
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+    throw lastErr;
+}
 
 interface ContributionDay {
     date: string;
@@ -49,26 +78,26 @@ const LegendBox = ({ opacity, label, theme }: { opacity: number, label: string, 
 // own graph fades from empty to darkest green.
 const LEVEL_OPACITY = [0.12, 0.4, 0.6, 0.8, 1.0];
 
+const fallbackData = contributionsFallback as ContributionsResponse;
+const fallbackTotal =
+    Object.values(fallbackData.total || {})[0] ??
+    fallbackData.contributions.reduce((sum, d) => sum + d.count, 0);
+
 export const CanvasContributionMap = ({ theme }: { theme: string }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [days, setDays] = useState<ContributionDay[] | null>(null);
-    const [total, setTotal] = useState<number | null>(null);
-    const [error, setError] = useState(false);
+    // Seed with the build-time snapshot so the widget always has real data
+    // to paint immediately, even before (or if) the live fetch resolves.
+    const [days, setDays] = useState<ContributionDay[] | null>(fallbackData.contributions);
+    const [total, setTotal] = useState<number | null>(fallbackTotal);
+    const [stale, setStale] = useState(false);
 
     useEffect(() => {
-        if (!GITHUB_USERNAME) {
-            setError(true);
-            return;
-        }
+        if (!GITHUB_USERNAME) return;
         let cancelled = false;
         withDailyCache(
             `gh_contributions_${GITHUB_USERNAME}`,
-            () =>
-                fetch(CONTRIBUTIONS_ENDPOINT).then((res) => {
-                    if (!res.ok) throw new Error(`Contributions request failed: ${res.status}`);
-                    return res.json() as Promise<ContributionsResponse>;
-                }),
+            () => fetchWithRetry(CONTRIBUTIONS_ENDPOINT),
             THREE_DAYS_MS
         )
             .then((json) => {
@@ -76,9 +105,13 @@ export const CanvasContributionMap = ({ theme }: { theme: string }) => {
                 setDays(json.contributions);
                 const lastYearTotal = Object.values(json.total || {})[0];
                 setTotal(lastYearTotal ?? json.contributions.reduce((sum, d) => sum + d.count, 0));
+                setStale(false);
             })
             .catch(() => {
-                if (!cancelled) setError(true);
+                // Live fetch failed and there was no cache to fall back to
+                // (withDailyCache already tried) — keep showing the bundled
+                // snapshot rather than blanking the widget out.
+                if (!cancelled) setStale(true);
             });
         return () => {
             cancelled = true;
@@ -227,11 +260,9 @@ export const CanvasContributionMap = ({ theme }: { theme: string }) => {
         <div className="mb-12 border border-[var(--border)] rounded-md bg-[var(--bg-activity)] p-5 max-w-full inline-block transition-colors duration-300">
             <div className="flex justify-between items-end mb-4 w-full">
                 <h2 className="text-sm md:text-base text-[var(--text-primary)] font-sans font-medium">
-                    {error
-                        ? "couldn't load contributions"
-                        : total === null
-                            ? 'loading contributions…'
-                            : `${total} contributions in the last year`}
+                    {total === null
+                        ? 'loading contributions…'
+                        : `${total} contributions in the last year${stale ? ' (cached)' : ''}`}
                 </h2>
             </div>
 

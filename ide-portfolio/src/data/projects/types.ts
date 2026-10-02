@@ -16,6 +16,11 @@ export interface ProjectDeployEntry {
     status: string;
 }
 
+export interface ProjectNote {
+    title: string;
+    url: string;
+}
+
 export interface Project {
     id: string;
     title: string;
@@ -28,6 +33,10 @@ export interface Project {
         github?: string;
         live?: string;
     };
+    // One entry per Notes writeup on the clean portfolio site (that site
+    // owns /notes, this one doesn't — see utils/portfolioSite.ts). A project
+    // can eventually have several: one per section/part it's broken into.
+    notes?: ProjectNote[];
     image?: string;
     date?: string;
     role?: string;

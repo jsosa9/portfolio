@@ -6,6 +6,7 @@ import {
 import { ThemeContext } from '../../context/ThemeContext';
 import { PROJECTS_DATA } from '../../data/projects';
 import { profile } from '../../data/profile';
+import { publicAsset } from '../../utils/publicAsset';
 
 interface SecondarySidebarProps {
     isOpen: boolean;
@@ -266,6 +267,12 @@ export const SecondarySidebar = ({ isOpen, activeTabId, onClose }: SecondarySide
                                                         Get in Touch
                                                     </a>
                                                 )}
+                                                {currentProject.notes?.map((note) => (
+                                                    <a key={note.url} href={note.url} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2 rounded-lg bg-[var(--bg-activity)] border border-[var(--border)] text-[var(--text-primary)] text-[11px] font-bold hover:bg-[var(--bg-activity)]/80 transition-all">
+                                                        <FileText size={12} />
+                                                        {note.title}
+                                                    </a>
+                                                ))}
                                             </>
                                         ) : (
                                             <>
@@ -281,7 +288,7 @@ export const SecondarySidebar = ({ isOpen, activeTabId, onClose }: SecondarySide
                                                     <Mail size={12} />
                                                     Email
                                                 </a>
-                                                <a href="/resume.pdf" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2 rounded-lg bg-[var(--bg-activity)] border border-[var(--border)] text-[var(--text-primary)] text-[11px] font-bold hover:bg-[var(--bg-activity)]/80 transition-all">
+                                                <a href={publicAsset('resume.pdf')} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 py-2 rounded-lg bg-[var(--bg-activity)] border border-[var(--border)] text-[var(--text-primary)] text-[11px] font-bold hover:bg-[var(--bg-activity)]/80 transition-all">
                                                     <FileText size={12} />
                                                     Resume
                                                 </a>
@@ -400,6 +407,12 @@ export const SecondarySidebar = ({ isOpen, activeTabId, onClose }: SecondarySide
                                                         <span className="text-[11px] font-sans">Live Demo</span>
                                                     </a>
                                                 )}
+                                                {currentProject.notes?.map((note) => (
+                                                    <a key={note.url} href={note.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 p-2 hover:bg-[var(--bg-activity)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                                                        <FileText size={13} />
+                                                        <span className="text-[11px] font-sans">{note.title}</span>
+                                                    </a>
+                                                ))}
                                             </>
                                         ) : (
                                             <>
@@ -415,7 +428,7 @@ export const SecondarySidebar = ({ isOpen, activeTabId, onClose }: SecondarySide
                                                     <Mail size={13} />
                                                     <span className="text-[11px] font-sans">Email</span>
                                                 </a>
-                                                <a href="/resume.pdf" target="_blank" className="flex items-center gap-2 p-2 hover:bg-[var(--bg-activity)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                                                <a href={publicAsset('resume.pdf')} target="_blank" className="flex items-center gap-2 p-2 hover:bg-[var(--bg-activity)] transition-colors text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
                                                     <FileText size={13} />
                                                     <span className="text-[11px] font-sans">Resume</span>
                                                 </a>

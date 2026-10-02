@@ -1,5 +1,5 @@
 <script setup>
-import { posts } from '../data/blog.js'
+import { posts } from '../data/notes.js'
 
 function formatDate(dateStr) {
   if (!dateStr) return ''
@@ -14,7 +14,7 @@ function formatDate(dateStr) {
 <template>
   <section class="section">
     <h2 v-motion :initial="{ opacity: 0, y: 14 }" :enter="{ opacity: 1, y: 0, transition: { duration: 400 } }">
-      Blog
+      Notes
     </h2>
 
     <p v-if="!posts.length" class="empty">Nothing posted yet — check back soon.</p>
@@ -23,7 +23,7 @@ function formatDate(dateStr) {
       <RouterLink
         v-for="(post, i) in posts"
         :key="post.slug"
-        :to="`/blog/${post.slug}`"
+        :to="`/notes/${post.slug}`"
         class="post-card"
         v-motion
         :initial="{ opacity: 0, y: 14 }"

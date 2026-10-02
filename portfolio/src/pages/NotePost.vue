@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import MarkdownIt from 'markdown-it'
-import { getPost } from '../data/blog.js'
+import { getPost } from '../data/notes.js'
 
 const md = new MarkdownIt({ html: false, linkify: true, breaks: false })
 
@@ -22,7 +22,7 @@ function formatDate(dateStr) {
 
 <template>
   <article v-if="post" class="post">
-    <RouterLink to="/blog" class="back-link">&larr; All posts</RouterLink>
+    <RouterLink to="/notes" class="back-link">&larr; All notes</RouterLink>
 
     <header class="post-header">
       <p class="post-date">{{ formatDate(post.date) }}</p>
@@ -43,7 +43,7 @@ function formatDate(dateStr) {
 
   <div v-else class="not-found">
     <p>Couldn't find that post.</p>
-    <RouterLink to="/blog" class="back-link">&larr; All posts</RouterLink>
+    <RouterLink to="/notes" class="back-link">&larr; All notes</RouterLink>
   </div>
 </template>
 

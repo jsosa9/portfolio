@@ -1,4 +1,4 @@
-// Blog posts are plain markdown files in src/blog/*.md, each with a YAML-ish
+// Notes are plain markdown files in src/notes/*.md, each with a YAML-ish
 // frontmatter block up top. Drop a new .md file in there and it shows up here
 // automatically — same pattern as StickerBoard's asset glob.
 
@@ -25,7 +25,7 @@ function slugify(filePath) {
   return filePath.split('/').pop().replace(/\.md$/, '')
 }
 
-const rawPosts = import.meta.glob('../blog/*.md', { eager: true, query: '?raw', import: 'default' })
+const rawPosts = import.meta.glob('../notes/*.md', { eager: true, query: '?raw', import: 'default' })
 
 export const posts = Object.entries(rawPosts)
   .map(([path, raw]) => {
