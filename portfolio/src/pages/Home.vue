@@ -10,7 +10,7 @@ const fade = (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 400, de
 // link is actually testable right now.
 const IDE_VERSION_URL = import.meta.env.DEV
   ? 'http://localhost:5176/ide-portfolio/'
-  : 'https://TODO-set-real-ide-portfolio-url.vercel.app'
+  : '/ide/'
 </script>
 
 <template>
