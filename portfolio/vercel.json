@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/ide/(.*)", "destination": "https://portfolio-ide-git-main-jose-sosas-projects.vercel.app/ide/$1" },
+    { "source": "/ide", "destination": "https://portfolio-ide-git-main-jose-sosas-projects.vercel.app/ide/" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
